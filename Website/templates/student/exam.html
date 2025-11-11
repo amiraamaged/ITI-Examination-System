@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Exam - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Exam: {{ exam.Title }}</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('student_dashboard') }}">DASHBOARD</a></li>
+                        <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="exam-header">
+                <h1 style="color: white;">{{ exam.Title }}</h1>
+                <p class="course-name">Course: {{ exam.Course_Name }}</p>
+                <p class="exam-instructions">
+                    📝 Read each question carefully and select your answer.<br>
+                    ⏱️ You have limited time to complete the exam.<br>
+                    ✅ Click submit when you're finished - you cannot go back!
+                </p>
+                <div class="exam-meta">
+                    <p><strong>Total Questions:</strong> {{ questions|length }} | <strong>Total Marks:</strong> {{ exam.Total_Marks }}</p>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('submit_exam', exam_id=exam_id) }}" class="exam-form">
+                {% for question_id, question in questions.items() %}
+                <div class="question-card">
+                    <h3>Question {{ loop.index }}</h3>
+                    <p class="question-text">{{ question.text }}</p>
+                    
+                    {% if question.choices %}
+                    <div class="choices">
+                        {% for choice in question.choices %}
+                        <label class="choice-label">
+                            <input type="radio" name="question_{{ question_id }}" value="{{ choice.choice_id }}" required>
+                            <span class="choice-text">{{ choice.text }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-answer">
+                        <textarea name="question_{{ question_id }}" placeholder="Type your answer here..." required></textarea>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="exam-submit">
+                    <button type="submit" class="btn btn-large">Submit Exam</button>
+                    <p class="submit-warning">⚠️ You cannot change answers after submission</p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

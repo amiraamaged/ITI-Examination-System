@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Exam Results</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('student_dashboard') }}">DASHBOARD</a></li>
+                        <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% if exam and results %}
+            <div class="results-header" >
+                <h1 style="color: white;">Exam Results: {{ exam.Title }}</h1>
+                <p class="course-name" style="color: white;">Course: {{ exam.Course_Name }}</p>
+                
+                <div class="score-summary">
+                    <div class="final-score">
+                        <h2>Your Final Score</h2>
+                        <div class="score-circle">
+                            <span class="score-number">{{ total_score }}/{{ exam.Total_Marks }}</span>
+                            <span class="score-percentage">
+                                {{ ((total_score / exam.Total_Marks) * 100)|round(1) }}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="performance-indicator">
+                    {% if (total_score / exam.Total_Marks) >= 0.5 %}
+                        <div class="performance-pass" style="color: white;">🎉 Excellent! You passed the exam!</div>
+                    {% else %}
+                        <div class="performance-fail">💪 Keep practicing! You'll do better next time.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            <section class="dashboard-section">
+                <h2>Detailed Results</h2>
+                <div class="questions-review">
+                    {% for result in results %}
+                    <div class="review-card {% if result.Is_Correct %}correct{% else %}incorrect{% endif %}">
+                        <h3>Question {{ loop.index }}</h3>
+                        <p class="question-text">{{ result.Question_Head }}</p>
+                        <div class="answer-comparison">
+                            <div class="your-answer">
+                                <strong>Your Answer:</strong> {{ result.Student_Choice }}
+                            </div>
+                            {% if not result.Is_Correct %}
+                            <div class="correct-answer">
+                                <strong>Correct Answer:</strong> {{ result.Correct_Answer }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="result-indicator">
+                            {% if result.Is_Correct %}
+                            <span class="correct">✅ Correct (+{{ result.Ques_Mark }} marks)</span>
+                            {% else %}
+                            <span class="incorrect">❌ Incorrect (0 marks)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% else %}
+            <div class="no-results">
+                <h1>Results Not Available</h1>
+                <p>Exam results are not available yet or there was an error loading them.</p>
+                <a href="{{ url_for('student_dashboard') }}" class="btn">Back to Dashboard</a>
+            </div>
+            {% endif %}
+
+            <div class="actions">
+                <a href="{{ url_for('student_dashboard') }}" class="btn">Back to Dashboard</a>
+                {% if exam %}
+                <a href="{{ url_for('take_exam', exam_id=exam_id) }}" class="btn btn-secondary">Retake Exam</a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

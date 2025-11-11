@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Examination System</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#">ABOUT ITI</a></li>
+                        <li><a href="#">SERVICES</a></li>
+                        <li><a href="{{ url_for('branches') }}">BRANCHES</a></li>
+                        <li><a href="#">NEWS</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h1>Student Login</h1>
+            <p class="subtitle">Enter your credentials to access the exam system</p>
+            
+            <div class="login-form">
+                <h2>Sign In</h2>
+                
+                <!-- Display error message if login fails -->
+                {% if error %}
+                <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <!-- Login form - method="POST" sends data to server -->
+<form method="POST" action="{{ url_for('student_login') }}">
+    <input type="text" name="student_id" placeholder="Student ID" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" class="btn" style="width: 100%;">Login</button>
+</form>
+            </div>
+            
+            <!-- Link back to home page -->
+            <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

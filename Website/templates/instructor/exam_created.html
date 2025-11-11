@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Created Successfully - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Exam Created Successfully</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('instructor_dashboard') }}">DASHBOARD</a></li>
+                        <li><a href="{{ url_for('create_exam') }}">CREATE EXAM</a></li>
+                        <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="success-message">
+                <div class="success-icon">🎉</div>
+                <h1>Exam Created Successfully!</h1>
+                <p class="subtitle">Your exam has been generated and is ready for students</p>
+                
+                <div class="exam-details">
+                    <div class="detail-card">
+                        <h3>Exam Information</h3>
+                        <div class="detail-row">
+                            <span class="label">Exam ID:</span>
+                            <span class="value">{{ exam_id }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Exam Title:</span>
+                            <span class="value">{{ exam_title }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Course:</span>
+                            <span class="value">{{ course_name }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Date:</span>
+                            <span class="value">{{ exam_date }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Time:</span>
+                            <span class="value">{{ start_time }} - {{ end_time }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>Next Steps</h3>
+                    <ul>
+                        <li>✅ Exam is now available to students during the scheduled time</li>
+                        <li>📊 View student results from your dashboard</li>
+                        <li>✏️ You can create more exams for other courses</li>
+                    </ul>
+                </div>
+
+                <div class="actions">
+                    <a href="{{ url_for('instructor_dashboard') }}" class="btn">Go to Dashboard</a>
+                    <a href="{{ url_for('create_exam') }}" class="btn btn-secondary">Create Another Exam</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

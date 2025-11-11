@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Branches - Information Technology Institute</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Our Branches</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('home') }}">HOME</a></li>
+                        <li><a href="#">ABOUT ITI</a></li>
+                        <li><a href="#">SERVICES</a></li>
+                        <li><a href="{{ url_for('branches') }}" style="color: #8B0000;">BRANCHES</a></li>
+                        <li><a href="#">NEWS</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="dashboard-welcome">
+                <h1>ITI Branches Across Egypt</h1>
+                <p class="subtitle">Serving students nationwide with quality technology education since 1993</p>
+            </div>
+
+            <!-- Branches Statistics -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Branches</h3>
+                    <p class="stat-number">{{ branches|length }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>First Branch</h3>
+                    <p class="stat-number">1996</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Latest Branch</h3>
+                    <p class="stat-number">2024</p>
+                </div>
+            </div>
+
+            <!-- Branches Grid -->
+            <section class="dashboard-section">
+                <h2>Our Branches</h2>
+                <div class="courses-grid">
+                    {% for branch in branches %}
+                    <div class="course-card">
+                        <h3>{{ branch.name }}</h3>
+                        <p class="student-count">📍 {{ branch.city }}</p>
+                        <p class="instructor-name">🚀 Launch Year: {{ branch.year }}</p>
+                        <div class="course-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ branch.location|urlencode }}" 
+                               target="_blank" class="btn btn-small">View on Map</a>
+                            <span class="btn btn-small btn-secondary">Since {{ branch.year }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Map Section -->
+            <section class="dashboard-section">
+                <h2>Find Your Nearest Branch</h2>
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; text-align: center;">
+                    <p style="margin-bottom: 20px; font-size: 1.1rem;">
+                        Click on any branch above to view its location on Google Maps, or visit our main website for more information.
+                    </p>
+                    <a href="https://iti.gov.eg/home" target="_blank" class="btn">Visit Official ITI Website</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                ITI - Empowering Egypt's Digital Future Since 1993
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

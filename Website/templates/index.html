@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Examination System</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#">ABOUT ITI</a></li>
+                        <li><a href="#">SERVICES</a></li>
+                      <li><a href="{{ url_for('branches') }}">BRANCHES</a></li>
+                        <li><a href="#">NEWS</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container" style="text-align: center;">
+            <h1>Welcome to ITI Exam System</h1>
+            <p class="subtitle">Select your role to continue</p>
+            
+            <div class="role-selection">
+                <div class="role-card">
+                    <h2>Student</h2>
+                    <p>Take exams and view results</p>
+                    <a href="{{ url_for('student_login') }}" class="btn">Student Login</a>
+                </div>
+                <div class="role-card">
+                    <h2>Instructor</h2>
+                    <p>Create exams and manage results</p>
+                    <a href="{{ url_for('instructor_login') }}" class="btn">Instructor Login</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

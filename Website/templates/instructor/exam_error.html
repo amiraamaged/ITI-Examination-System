@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Creation Failed - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Exam Creation Failed</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('instructor_dashboard') }}">DASHBOARD</a></li>
+                        <li><a href="{{ url_for('create_exam') }}">CREATE EXAM</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="error-message">
+                <div class="error-icon">❌</div>
+                <h1>Exam Creation Failed</h1>
+                <p class="subtitle">{{ error_message }}</p>
+                
+                <div class="troubleshooting">
+                    <h3>Possible Solutions:</h3>
+                    <ul>
+                        <li>• Check if the course has enough questions in the database</li>
+                        <li>• Verify the exam date is not in the past</li>
+                        <li>• Ensure the course name is correct</li>
+                        <li>• Contact system administrator if problem persists</li>
+                    </ul>
+                </div>
+
+                <div class="actions">
+                    <a href="{{ url_for('create_exam') }}" class="btn">Try Again</a>
+                    <a href="{{ url_for('instructor_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

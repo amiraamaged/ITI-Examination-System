@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Exam - ITI Exam System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Screenshot_27.png') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Screenshot_27.png') }}" alt="ITI Logo" class="logo">
+                    <div>
+                        <div class="institute-name">Information Technology Institute</div>
+                        <div class="institute-subtitle">Create New Exam</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('instructor_dashboard') }}">DASHBOARD</a></li>
+                        <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="dashboard-section">
+                <h1>Create New Exam</h1>
+                <p class="subtitle">Generate an exam with random questions from your course</p>
+
+                <form method="POST" class="exam-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="course_name">Course Name *</label>
+                            <select name="course_name" id="course_name" required class="form-select">
+                                <option value="">Select a course</option>
+                                {% for course in courses %}
+                                <option value="{{ course }}">{{ course }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="exam_date">Exam Date *</label>
+                            <input type="date" name="exam_date" id="exam_date" required min="{{ today }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="start_time">Start Time *</label>
+                            <input type="time" name="start_time" id="start_time" required value="09:00">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_time">End Time *</label>
+                            <input type="time" name="end_time" id="end_time" required value="10:30">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="no_tf">Number of True/False Questions</label>
+                            <input type="number" name="no_tf" id="no_tf" min="0" max="10" value="2">
+                            <small>Max 10 questions</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_mcq">Number of MCQ Questions</label>
+                            <input type="number" name="no_mcq" id="no_mcq" min="0" max="15" value="3">
+                            <small>Max 15 questions</small>
+                        </div>
+                    </div>
+
+                    <div class="exam-summary">
+                        <h3>Exam Summary</h3>
+                        <p>Total Questions: <span id="total-questions">5</span></p>
+                        <p>Total Marks: <span id="total-marks">10</span></p>
+                        <p>Duration: <span id="exam-duration">1 hour 30 minutes</span></p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-large">Generate Exam</button>
+                        <a href="{{ url_for('instructor_dashboard') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Information Technology Institute. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Calculate total questions and marks
+        function updateExamSummary() {
+            const noTF = parseInt(document.getElementById('no_tf').value) || 0;
+            const noMCQ = parseInt(document.getElementById('no_mcq').value) || 0;
+            const totalQuestions = noTF + noMCQ;
+            const totalMarks = totalQuestions * 2; // 2 marks per question
+            
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('total-marks').textContent = totalMarks;
+            
+            // Calculate duration
+            const startTime = document.getElementById('start_time').value;
+            const endTime = document.getElementById('end_time').value;
+            if (startTime && endTime) {
+                const start = new Date(`2000-01-01T${startTime}`);
+                const end = new Date(`2000-01-01T${endTime}`);
+                const diff = (end - start) / (1000 * 60); // difference in minutes
+                const hours = Math.floor(diff / 60);
+                const minutes = diff % 60;
+                document.getElementById('exam-duration').textContent = 
+                    `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            }
+        }
+
+        // Set today's date as min date
+        document.getElementById('exam_date').min = new Date().toISOString().split('T')[0];
+
+        // Add event listeners
+        document.getElementById('no_tf').addEventListener('input', updateExamSummary);
+        document.getElementById('no_mcq').addEventListener('input', updateExamSummary);
+        document.getElementById('start_time').addEventListener('change', updateExamSummary);
+        document.getElementById('end_time').addEventListener('change', updateExamSummary);
+
+        // Initialize summary
+        updateExamSummary();
+    </script>
+</body>
+</html>
