@@ -33,3 +33,11 @@ The system manages exam creation, execution, grading, and performance analysis. 
 
 ### 🚀 Getting Started
 Refer to the full documentation for setup, database scripts, and deployment details.
+
+
+### Project Team:
+- Amira Maged
+- Ashraqat Mohammed
+- Sarah Hani
+- Doha Waleed
+- Walaa Ahmed
